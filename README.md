@@ -131,3 +131,5 @@ this is obviously an extremely simplified version of what actual ml training loo
 here is how it actually looks when graphed:
 
 <img width="691" height="411" alt="Linear-regression" src="https://github.com/user-attachments/assets/36197a10-93ff-4d16-a98f-242b78f819f0" />
+
+ps: ignore the values in this image, focus on the plotted line and points
