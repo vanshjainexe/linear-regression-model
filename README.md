@@ -6,7 +6,7 @@ if you even have the knowledge of high school mathematics, you should be able to
 
 by this you will get a grasp of how machines learn (do not get fooled by the ease of this, this is just the tip of the iceberg) but a must to learn when beginning.
 
-we know that the equation of a straight line is y=mx+b
+we know that the equation of a straight line is $y = mx + b$
 
 we are just going to use that.
 
@@ -34,21 +34,29 @@ try writing it on your own for the function y=2x, y=3x or y=0.5x on your own.
 
 first we set w=0 and b=0 (because the machine does not know their values yet)
 
-we set learning rate something like 0.01 (it is your choice personally, but keep it small. larger learning rates will not yield results because with smaller learning rates there is more scope for iteration, with larger learning rates you will take huge leaps, in most cases be terribly wrong and eventually never reach the right prediction)
+we set learning rate (α) something like 0.01 (it is your choice personally, but keep it small. larger learning rates will not yield results because with smaller learning rates there is more scope for iteration, with larger learning rates you will take huge leaps, in most cases be terribly wrong and eventually never reach the right prediction)
 
 we give 2 lists x and y (they must follow the relation you are essentially trying to get the computer guess)
 
-then we make a prediction
+then we make a prediction, we take each x at a time and use the formula:
 
-we take each x at a time and use the formula *wx+b*
+$$
+\hat{y} = wx + b
+$$
 
-then we calculate the error (note the error, not the loss)
+then we calculate the error (note the error, not the loss), it is simply:
 
-it is simply (prediction - y)^2 (we square it to not have to deal with negatives while having many inputs)
+$$
+error = (\hat{y} - y)^2
+$$
 
-loss calculated using the mse function.
+(we square it to not have to deal with negatives while having many inputs)
 
-that is 1/n(summation of i=1 to n error) (n is the number of inputs)
+loss calculated using the mse function:
+
+$$
+L = \frac{1}{n}\sum_{i=1}^{n}(wx_i + b - y_i)^2
+$$
 
 we divide by n to find the average loss
 
@@ -56,10 +64,15 @@ we set the partial dervs 0 initially
 
 now here's the part that actually makes it "learn"
 
-we need to find out how much w and b are responsible for the error, so we take the partial derivative of the loss function w.r.t w and b
+we need to find out how much w and b are responsible for the error, so we take the partial derivative of the loss function w.r.t w and b:
 
-dL/dw = (2/n) * sum((wx+b - y) * x)
-dL/db = (2/n) * sum(wx+b - y)
+$$
+\frac{\partial L}{\partial w} = \frac{2}{n}\sum_{i=1}^{n}(wx_i + b - y_i) \cdot x_i
+$$
+
+$$
+\frac{\partial L}{\partial b} = \frac{2}{n}\sum_{i=1}^{n}(wx_i + b - y_i)
+$$
 
 dont be scared of these, all we did was differentiate the mse function w.r.t w and b respectively (basic calculus, chain rule)
 
@@ -67,8 +80,13 @@ now that we know the slope (gradient) of the loss function at our current w and 
 
 so we update our guesses:
 
-w = w - (learning_rate * dL/dw)
-b = b - (learning_rate * dL/db)
+$$
+w = w - \alpha \frac{\partial L}{\partial w}
+$$
+
+$$
+b = b - \alpha \frac{\partial L}{\partial b}
+$$
 
 we subtract because the gradient points in the direction of steepest increase, and we want to go the other way (towards the minimum loss)
 
@@ -77,9 +95,9 @@ we subtract because the gradient points in the direction of steepest increase, a
 so the full loop looks something like:
 
 1. start with w=0, b=0
-2. make predictions for all x using y = wx+b
+2. make predictions for all x using $\hat{y} = wx + b$
 3. calculate the error and loss (mse)
-4. calculate dL/dw and dL/db
+4. calculate $\partial L/\partial w$ and $\partial L/\partial b$
 5. update w and b using the formulas above
 6. repeat steps 2-5 for a bunch of iterations (epochs)
 
@@ -108,7 +126,7 @@ just to get the hang of it, once you can do these by hand (well, by code) you ba
 
 this is obviously an extremely simplified version of what actual ml training looks like, no libraries, no matrix ops, no vectorization, just plain loops and lists so its easy to follow. once you're comfortable with this, go check out how numpy/pytorch does this under the hood, its the same idea just way faster and scaled up
 
-# visual representation 
+# visual representation
 
 here is how it actually looks when graphed:
 
